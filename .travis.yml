@@ -8,8 +8,8 @@ env:
     - REPO_URL="https://github.com/radon-h2020/radon-gmt.git"
     - REPO_DIR="radon-h2020_radon-gmt-artifacts"
     - ARTIFACT_DIR="artifacts"
-    - ARTIFACT_FILES_REPOSITORY="org.eclipse.winery.repository.rest/target/*.war"
-    - ARTIFACT_FILES_FRONTENDS="org.eclipse.winery.frontends/target/*.war"
+    - ARTIFACT_FILES_REPOSITORY="org.eclipse.winery.repository.rest/target"
+    - ARTIFACT_FILES_FRONTENDS="org.eclipse.winery.frontends/target"
     - NAME="radon-gmt-artifacts"
 
 script:
@@ -17,8 +17,10 @@ script:
   - mkdir "${ARTIFACT_DIR}"
   - docker build -t "${NAME}" . 
   - docker run -ti -v "`pwd`/${REPO_DIR}":/tmp/winery "${NAME}"
-  - cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}" "${ARTIFACT_DIR}/."
-  - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}" "${ARTIFACT_DIR}/."
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}/winery.war" "${ARTIFACT_DIR}/winery.war"
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/tosca-management.war" "${ARTIFACT_DIR}/ROOT.war"
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/topologymodeler.war" "${ARTIFACT_DIR}/winery-topologymodeler.war"
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/workflowmodeler.war" "${ARTIFACT_DIR}/winery-workflowmodeler.war"
   - zip "${NAME}" "${ARTIFACT_DIR}/*"
 
 deploy:
