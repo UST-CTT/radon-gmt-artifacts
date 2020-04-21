@@ -1,0 +1,30 @@
+language: minimal
+
+services:
+  - docker
+
+env:
+  global:
+    - REPO_URL="https://github.com/radon-h2020/radon-gmt.git"
+    - REPO_DIR="radon-h2020_radon-gmt-artifacts"
+    - ARTIFACT_DIR="artifacts"
+    - ARTIFACT_FILES_REPOSITORY="org.eclipse.winery.repository.rest/target/*.war"
+    - ARTIFACT_FILES_FRONTENDS="org.eclipse.winery.frontends/target/*.war"
+    - NAME="radon-gmt-artifacts"
+
+script:
+  - git clone "${REPO_URL}" "${REPO_DIR}"
+  - mkdir "${ARTIFACT_DIR}"
+  - docker build -t "${NAME}" "${REPO_DIR}"
+  - docker run -ti -v "`pwd`/${REPO_DIR}":/tmp/winery "${NAME}"
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}" "${ARTIFACT_DIR}/."
+  - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}" "${ARTIFACT_DIR}/."
+  - zip "${NAME}" "${ARTIFACT_DIR}/*"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "${GITHUB_API_KEY}"
+  file: "${NAME}.zip"
+  draft: true
+  skip_cleanup: true
