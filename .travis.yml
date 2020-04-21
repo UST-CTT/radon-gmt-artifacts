@@ -15,7 +15,7 @@ env:
 script:
   - git clone "${REPO_URL}" "${REPO_DIR}"
   - mkdir "${ARTIFACT_DIR}"
-  - docker build -t "${NAME}" "${REPO_DIR}"
+  - docker build -t "${NAME}" . 
   - docker run -ti -v "`pwd`/${REPO_DIR}":/tmp/winery "${NAME}"
   - cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}" "${ARTIFACT_DIR}/."
   - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}" "${ARTIFACT_DIR}/."
