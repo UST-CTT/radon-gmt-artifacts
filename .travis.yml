@@ -21,7 +21,7 @@ script:
   - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/tosca-management.war" "${ARTIFACT_DIR}/ROOT.war"
   - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/topologymodeler.war" "${ARTIFACT_DIR}/winery-topologymodeler.war"
   - cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/workflowmodeler.war" "${ARTIFACT_DIR}/winery-workflowmodeler.war"
-  - zip "${NAME}" "${ARTIFACT_DIR}/*"
+  - zip "${NAME}" "${ARTIFACT_DIR}/winery.war" "${ARTIFACT_DIR}/ROOT.war" "${ARTIFACT_DIR}/winery-topologymodeler.war" "${ARTIFACT_DIR}/winery-workflowmodeler.war" 
 
 deploy:
   provider: releases
