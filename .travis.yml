@@ -1,26 +1,28 @@
 language: minimal
+
 services:
 - docker
+
 env:
   global:
   - REPO_URL="https://github.com/radon-h2020/radon-gmt.git"
   - REPO_DIR="radon-h2020_radon-gmt-artifacts"
-  - ARTIFACT_DIR="artifacts"
   - ARTIFACT_FILES_REPOSITORY="org.eclipse.winery.repository.rest/target"
   - ARTIFACT_FILES_FRONTENDS="org.eclipse.winery.frontends/target"
   - NAME="radon-gmt-artifacts"
+
 script:
 - git clone "${REPO_URL}" "${REPO_DIR}"
-- mkdir "${ARTIFACT_DIR}"
 - docker build -t "${NAME}" .
 - docker run -ti -v "`pwd`/${REPO_DIR}":/tmp/winery "${NAME}"
-- cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}/winery.war" "${ARTIFACT_DIR}/winery.war"
-- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/tosca-management.war" "${ARTIFACT_DIR}/ROOT.war"
-- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/topologymodeler.war" "${ARTIFACT_DIR}/winery-topologymodeler.war"
-- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/workflowmodeler.war" "${ARTIFACT_DIR}/winery-workflowmodeler.war"
-- zip "${NAME}" "${ARTIFACT_DIR}/winery.war" "${ARTIFACT_DIR}/ROOT.war" "${ARTIFACT_DIR}/winery-topologymodeler.war"
-  "${ARTIFACT_DIR}/winery-workflowmodeler.war"
+- cp "${REPO_DIR}/${ARTIFACT_FILES_REPOSITORY}/winery.war" winery.war
+- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/tosca-management.war" ROOT.war
+- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/topologymodeler.war" winery-topologymodeler.war
+- cp "${REPO_DIR}/${ARTIFACT_FILES_FRONTENDS}/workflowmodeler.war" winery-workflowmodeler.war
+- zip "${NAME}" winery.war ROOT.war winery-topologymodeler.war winery-workflowmodeler.war
+
 deploy:
+  name: "radon-gmt-artifacts"
   provider: releases
   api_key:
     secure: PPWtFhB8frSGLyWVGwMVgSl9D5teQ/MmDLkhfT7pOWpGFHArRHHNXQMZocqHo1ed0sDYCG/0N2IvbTaZOS3F4Nxg4tz/719UNxIKNBaXZZiVwB4wlxpjneLEQE4Cm8os2cLm+j0UMA7f18KyMonbB9/aqNiKjHYzBDyE0PJJRC/qNOvKuE+p2NIRNDwdaDY0/Z/bbdm8fm/7chbut6nNf0ndSNfyn8bsy6kSlMKakPafTO77UcjqVLn2glfPmohdby2+3oo/9wD4vwvGVptc/YmNsLKR0chok1hda/OoXjg7IIZVAR4rIYVu2Fj7+JmLKxbHBkoUcPkf0wRnJH7mtRA8JWfV69T55oD59dqGsKocWXIAkqzsmJW523t5/0cCYkKZw0f6HYB8kDP6SPDXGXUGif1RbCwOblyc+UfWsCwq7y21tXlVnxZqDs8Dwt6jOE+YkmM78hooH0FX/N6Sh0l5BCyjX+Jn4qrxMqMSWmXlAK+5aVuQX155KBClAEtxcB2k91JI9GetSlP2opYkKsS2fsuuT6NCzCFCRXr80rm7eO+2DDUBks7aoADmFabdcBFLyXY0FRnXPlQ4OvT+FUsyTU4v0CRmuTX9L0HuZ7t4CODgxVfOZu9AUO8XnlAR210MAJCbblTYSDsCsVBg7Zfzz/g6TldpQ1orNnKLvik=
