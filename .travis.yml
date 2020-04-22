@@ -27,7 +27,6 @@ deploy:
   api_key:
     secure: PPWtFhB8frSGLyWVGwMVgSl9D5teQ/MmDLkhfT7pOWpGFHArRHHNXQMZocqHo1ed0sDYCG/0N2IvbTaZOS3F4Nxg4tz/719UNxIKNBaXZZiVwB4wlxpjneLEQE4Cm8os2cLm+j0UMA7f18KyMonbB9/aqNiKjHYzBDyE0PJJRC/qNOvKuE+p2NIRNDwdaDY0/Z/bbdm8fm/7chbut6nNf0ndSNfyn8bsy6kSlMKakPafTO77UcjqVLn2glfPmohdby2+3oo/9wD4vwvGVptc/YmNsLKR0chok1hda/OoXjg7IIZVAR4rIYVu2Fj7+JmLKxbHBkoUcPkf0wRnJH7mtRA8JWfV69T55oD59dqGsKocWXIAkqzsmJW523t5/0cCYkKZw0f6HYB8kDP6SPDXGXUGif1RbCwOblyc+UfWsCwq7y21tXlVnxZqDs8Dwt6jOE+YkmM78hooH0FX/N6Sh0l5BCyjX+Jn4qrxMqMSWmXlAK+5aVuQX155KBClAEtxcB2k91JI9GetSlP2opYkKsS2fsuuT6NCzCFCRXr80rm7eO+2DDUBks7aoADmFabdcBFLyXY0FRnXPlQ4OvT+FUsyTU4v0CRmuTX9L0HuZ7t4CODgxVfOZu9AUO8XnlAR210MAJCbblTYSDsCsVBg7Zfzz/g6TldpQ1orNnKLvik=
   file: "${NAME}.zip"
-  draft: true
   skip_cleanup: true
   on:
     repo: UST-CTT/radon-gmt-artifacts
